@@ -94,7 +94,7 @@ class GetNews:
             one_new.setdefault('tag' , tag_s[:-1])
             one_new.setdefault('from' , source)
             one_new.setdefault('pv' , random.randint(10,10000))
-            one_new.setdefault('publishTime' , random.sample(timeList,1))
+            one_new.setdefault('publishTime' , random.sample(timeList,1)[0])
             one_new.setdefault('id' , i)
             f.close()
             result.append(one_new)
