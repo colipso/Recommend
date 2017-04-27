@@ -138,3 +138,4 @@ SS.sendByPost(fh_news)
 folder = u'/home/hp/CODE/Recommend/data/新浪新闻'
 xl_news = GN.getNewFromFile(folder)
 SS.sendByPost(xl_news)
+#endtest

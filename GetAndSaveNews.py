@@ -39,7 +39,7 @@ class MainHandler(tornado.web.RequestHandler):
         
     def get(self):
         '''get url
-        http://127.0.0.1:8888?name=hp
+        url example:http://127.0.0.1:8888?name=hp
         '''
         self.set_cookie('username', 'peng', expires=time.time()+900)
         nowamagic = self.get_argument('name')
