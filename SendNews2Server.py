@@ -16,6 +16,8 @@ import urllib
 import time
 import json
 from help import Log
+import codecs
+import chardet
 
 tagList = [u'新闻',
             u'军事',
@@ -64,7 +66,7 @@ class GetNews:
         output:
         @result : a dict . 
                  ex :[{title:***,tag:****,publishTime:***,from:***,\
-                 content:**** , 'pv':***},*****]
+                 content:**** , 'pv':*** , id:*****},*****]
                  tag: ex 'joy,military'
         '''
         debug = False
@@ -76,10 +78,14 @@ class GetNews:
             new_name = new_file.split('.')[0]
             one_new.setdefault('title',new_name)
             full_file = folder + '/'+new_file
-            f = open(full_file)
+            f = open(full_file,'r')
             content = ''
             for line in f.readlines():
-                content += line
+                content += line.strip()
+            codetype = chardet.detect(content)['encoding']
+            if codetype == None:
+                continue
+            content = content.decode(codetype,'ignore')
             one_new.setdefault('content',content)
             tag = random.sample(tagList , 2)
             tag_s = ''
@@ -89,6 +95,7 @@ class GetNews:
             one_new.setdefault('from' , source)
             one_new.setdefault('pv' , random.randint(10,10000))
             one_new.setdefault('publishTime' , random.sample(timeList,1))
+            one_new.setdefault('id' , i)
             f.close()
             result.append(one_new)
             Debug().debug(one_new['content'],isdebug = debug)
@@ -115,7 +122,7 @@ class SendInfo2Server:
         opener = urllib2.build_opener(proxy_build)
         urllib2.install_opener(opener)        
         i = 0
-        requrl = 'http://'+url+':'+str(port)+'/'
+        requrl = 'http://'+url+':'+str(port)+'/sendnews'
         Log().write("Begin send news to server")
         for d in dataList:            
             req = urllib2.Request(requrl)
@@ -138,4 +145,3 @@ SS.sendByPost(fh_news)
 folder = u'/home/hp/CODE/Recommend/data/新浪新闻'
 xl_news = GN.getNewFromFile(folder)
 SS.sendByPost(xl_news)
-#endtest

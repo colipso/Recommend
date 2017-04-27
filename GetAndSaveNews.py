@@ -27,19 +27,22 @@ class SaveData2File:
             @onelineData: json like txt .ex:'{"a": 1, "b": 2}'
         '''
         f = open(fileName , 'a')
-        f.write(json.dumps(onelineData))
+        data = json.dumps(onelineData)
+        if isinstance(onelineData , dict):
+            if 'title' in onelineData.keys():
+                Log().write(u"Server get and save new : %s" % onelineData['title'])
+        f.write(data)
         f.write('\n')
         f.close()
 
-class MainHandler(tornado.web.RequestHandler):
+class SendNewsHandler(tornado.web.RequestHandler):
     def post(self):
         data = tornado.escape.json_decode(self.request.body)
-        time.sleep(60)
         SaveData2File().append(data)
         
     def get(self):
         '''get url
-        url example:http://127.0.0.1:8888?name=hp
+        http://127.0.0.1:8888?name=hp
         '''
         self.set_cookie('username', 'peng', expires=time.time()+900)
         nowamagic = self.get_argument('name')
@@ -48,7 +51,7 @@ class MainHandler(tornado.web.RequestHandler):
 
 def make_app():
     return tornado.web.Application([
-        (r"/", MainHandler),
+        (r"/sendnews", SendNewsHandler),
     ])
 
 if __name__ == "__main__":
