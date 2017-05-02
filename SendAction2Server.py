@@ -54,8 +54,15 @@ class GetActions:
         returnData = []
         for r in result:
             oneAction = {}
-            oneAction.setdefault('userId',r[0])
-            oneAction.setdefault('newsId',r[1])
+            try:
+                newId = int(r[1][:-1])
+                userId = int(r[0])
+                if userId > 2147483647 or newId > 2147483647 :
+                    continue
+            except:
+                continue
+            oneAction.setdefault('userId',userId)
+            oneAction.setdefault('newsId',newId)
             oneAction.setdefault('rating',r[2])
             returnData.append(oneAction)
         return returnData
@@ -71,7 +78,6 @@ class SendInfo2Server:
         input:
         @data:result of GetNews.getNewFromFile
         '''
-        debug = False
         #When it tries to proxy "127.0.0.01/", the proxy gives up and returns a 504 error.
         #so need to setup an empty proxy
         proxy_build = urllib2.ProxyHandler({})
