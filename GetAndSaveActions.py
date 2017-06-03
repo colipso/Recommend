@@ -20,10 +20,11 @@ import tornado.ioloop
 import tornado.web
 import time
 import json
+import os
 from help import Log
 
 
-fileName = '/home/hp/CODE/Recommend/data/sparkActions.txt'
+fileName = os.getcwd() + '/data/dparkActions.txt'
 
 structureList = ['userId','newsId','rating']
 

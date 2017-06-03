@@ -37,7 +37,7 @@ class Debug:
             
             
 class GetActions:
-    def __init__(self , host = 'localhost' , port = 3306 , user = 'root' , passwd = '254449597' , db = 'news'):
+    def __init__(self , host = 'localhost' , port = 3306 , user = 'root' , passwd = '123456' , db = 'news'):
         '''initialize
         
         '''

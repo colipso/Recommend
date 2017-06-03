@@ -18,6 +18,7 @@ import json
 from help import Log
 import codecs
 import chardet
+import os
 
 tagList = [u'新闻',
             u'军事',
@@ -138,10 +139,10 @@ class SendInfo2Server:
 GN = GetNews()
 SS = SendInfo2Server()
 
-folder = u'/home/hp/CODE/Recommend/data/凤凰新闻'
+folder = os.getcwd() + u'/data/凤凰新闻'
 fh_news = GN.getNewFromFile(folder)
 SS.sendByPost(fh_news)
 
-folder = u'/home/hp/CODE/Recommend/data/新浪新闻'
+folder = os.getcwd() + u'/data/新浪新闻'
 xl_news = GN.getNewFromFile(folder)
 SS.sendByPost(xl_news)

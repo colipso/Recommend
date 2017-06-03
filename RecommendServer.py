@@ -21,14 +21,14 @@ from pyspark.sql import Row
 from pyspark.sql.functions import col
 import tornado.ioloop
 import tornado.web
-
+import os
 
 sc = SparkContext("local[1]" , "RecommendServer")
 sc.setLogLevel("ERROR")
 sqc = SQLContext(sc)
 
 #read rating data into spark
-rating_file = '/home/hp/CODE/Recommend/data/sparkActions.txt' # the structure of txt is userId , newsId , rating
+rating_file = os.getcwd() + '/data/sparkActions.txt' # the structure of txt is userId , newsId , rating
 
 
 ratings_df = sqc.read.json(rating_file)
@@ -98,7 +98,7 @@ def recommendByCF(userId):
 Recommend by tag. Give user the hotest news in his tag which not readed.
 '''
 
-news_file = '/home/hp/CODE/Recommend/data/sparkData.txt' # the structure of txt is userId , newsId , rating
+news_file = os.getcwd() + '/data/sparkData.txt' # the structure of txt is userId , newsId , rating
 news_df = sqc.read.json(news_file) #{title:***,tag:****,publishTime:***,from:***,content:**** , 'pv':*** , id:*****}
 news_df.cache()
 sorted_news_df = news_df.sort(news_df.pv.desc(),news_df.publishTime.desc())

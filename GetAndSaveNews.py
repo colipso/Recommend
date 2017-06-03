@@ -13,8 +13,10 @@ import tornado.web
 import time
 from help import Log
 import json
+import os
 
-fileName = '/home/hp/CODE/Recommend/data/sparkData.txt'
+fileName = os.getcwd() + '/data/sparkData.txt'
+
 
 class SaveData2File:
     def __init__(self):
